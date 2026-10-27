@@ -1,3 +1,4 @@
+import { lazy, Suspense } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import { Layout } from './components/layout/Layout'
 import { AdminPage } from './pages/AdminPage'
@@ -8,6 +9,10 @@ import { LittleHeroPage } from './pages/LittleHeroPage'
 import { NotFoundPage } from './pages/NotFoundPage'
 import { PocketUniversePage } from './pages/PocketUniversePage'
 import { PrivacyPage } from './pages/PrivacyPage'
+
+// Experimental 3D room (experiments/3d-room/). Lazy so three.js stays out
+// of the main bundle; unlinked, reachable at /3d-lab only.
+const ThreeDLabPage = lazy(() => import('./pages/ThreeDLabPage').then((m) => ({ default: m.ThreeDLabPage })))
 
 export function App() {
   return (
@@ -27,6 +32,14 @@ export function App() {
         <Route path="family-universe" element={<FamilyUniversePage />} />
         <Route path="privacy" element={<PrivacyPage />} />
         <Route path="admin" element={<AdminPage />} />
+        <Route
+          path="3d-lab"
+          element={
+            <Suspense fallback={null}>
+              <ThreeDLabPage />
+            </Suspense>
+          }
+        />
         <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>
