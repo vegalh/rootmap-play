@@ -4,24 +4,37 @@ RootMap Play is a playful, shareable collection of interactive digital
 experiences for families with children aged 0–6, built under the RootMap
 brand. It is a separate repository and deployment from RootMapMVP.
 
-> **Status: Phase 1 — Foundation.** The site, navigation, design system, and
-> analytics/admin scaffolding described below are implemented. The actual
-> creation experiences (Pocket Universe, Little Hero Card, Family Universe)
-> are intentionally **not yet implemented** — product pages honestly show a
-> "creation feature coming soon" state instead of a fake working button. See
-> [docs/ROADMAP.md](docs/ROADMAP.md) for what's planned next.
+> **Status: Phase 2A — Pocket Universe creator.** The foundation (site,
+> navigation, design system, analytics/admin scaffolding) and a fully
+> functional Pocket Universe creation experience are implemented. Little
+> Hero Card and Family Universe are intentionally **not yet implemented** —
+> their product pages honestly show a "即将开放" (coming soon) state instead
+> of a fake working button. See [docs/ROADMAP.md](docs/ROADMAP.md) for
+> what's planned next.
 
-## What's implemented in Phase 1
+## What's implemented
 
-- Homepage with hero, brand introduction, and a product grid.
-- Three product routes (`/pocket-universe`, `/little-hero`, `/family-universe`)
-  with original SVG illustrations and an honest "coming soon" state.
-- Responsive header (desktop nav + mobile menu) and footer.
+- Homepage as a lightweight, art-first promotional entry point (not a SaaS
+  landing page) — one hero experience, a short headline, one primary CTA,
+  and two secondary experience cards.
+- **Pocket Universe** (`/pocket-universe`) is fully functional: pick exactly
+  5 of 30 illustrated items across 6 categories, generate a deterministic
+  personalized illustrated scene, switch between 3 color themes, regenerate
+  the layout, return to edit the selection, and download a ≥2000px branded
+  PNG. See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for how it's built.
+- Little Hero Card and Family Universe product routes exist with original
+  SVG illustrations and an honest "即将开放" state.
+- Responsive header (logo + privacy link only, no hamburger menu) and a
+  minimal footer.
 - A privacy notice banner that gates any future analytics network calls on
   explicit visitor consent.
 - A consent-aware analytics abstraction (`src/analytics/`) with a safe no-op
   default provider and a Supabase-ready provider stub that only activates
-  once a backend is configured, enabled, and consented to.
+  once a backend is configured, enabled, and consented to. Pocket Universe
+  fires `creation_started`/`creation_completed`/`download_clicked`/
+  `download_succeeded`, and its post-download rating prompt fires
+  `rating_submitted`/`feedback_submitted` — see
+  [docs/ANALYTICS_EVENTS.md](docs/ANALYTICS_EVENTS.md).
 - A `/admin` route that honestly reports "setup required" instead of showing
   a working dashboard, a login form, or any mock data.
 - Simplified Chinese UI copy with an i18n structure ready for English later.
@@ -31,9 +44,7 @@ brand. It is a separate repository and deployment from RootMapMVP.
 
 ## What's intentionally NOT implemented yet
 
-- The three creation experiences themselves (image composition, downloadable
-  PNG export) — Phase 2.
-- Rating / feedback collection UI — Phase 2/3.
+- Little Hero Card and Family Universe creation experiences — Phase 2B/2C.
 - Community interest form — Phase 2/3.
 - Supabase database schema, event ingestion, and authenticated admin access —
   Phase 3.

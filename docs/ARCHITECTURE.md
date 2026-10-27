@@ -24,10 +24,14 @@ src/
     ui/                Design-system primitives (Button, Badge, Container)
     ArtworkFrame.tsx          "Art print" presentation for product illustrations
     ProductCard.tsx           Secondary experience card (impression + click tracking)
-    ProductDetailLayout.tsx   Shared compact layout for the 3 product detail pages
+    ProductDetailLayout.tsx   Shared compact layout for not-yet-implemented products
+    FeedbackPrompt.tsx        Shared post-creation 1–5 star rating + reason chips
     PrivacyNoticeBanner.tsx   First-visit consent banner
   config/
     env.ts             Typed, centralised environment variable access
+  features/
+    pocketUniverse/    Pocket Universe creator (see below) — the only product
+                       implemented past the "coming soon" placeholder so far
   i18n/
     translations/zh-CN.ts     Simplified Chinese copy dictionary
     index.ts                  `t` + `useTranslations()` — static today, locale-aware shape
@@ -36,6 +40,27 @@ src/
 e2e/                   Playwright specs
 public/                Static assets, 404.html (SPA fallback), .nojekyll
 ```
+
+## Pocket Universe creator (`src/features/pocketUniverse/`)
+
+The first implemented creation experience, deliberately split into pure
+logic (fast, React-free unit tests) and presentation layers:
+
+| File | Responsibility |
+|---|---|
+| `itemsMeta.ts` | Plain-data catalogue of the 30 selectable items + 6 categories (no JSX, so `composition.ts` has zero React dependency). |
+| `rng.ts` | Deterministic FNV-1a hash + mulberry32 PRNG — same inputs always produce the same output. |
+| `composition.ts` | Pure layout algorithm: given exactly 5 item ids (+ a "regenerate" nonce), deterministically picks a hero/centerpiece and places the rest on a jittered orbit ring with an ambient star field. Fully unit tested without any DOM. |
+| `items.tsx` | The actual hand-authored SVG icon renderers for all 30 items. |
+| `themes.ts` | 3 named color themes (sky/ring/star/ground colors) — layout is identical across themes, only the palette changes. |
+| `SceneArt.tsx` | Renders the composed scene as one SVG (used both on-screen and, via `ref`, as the export source). Contains no `<text>` — see file-level comment for why. |
+| `svgExport.ts` | Rasterizes the SVG to a ≥2000px PNG via canvas, then draws the Chinese title/credit with the Canvas 2D API after awaiting web-font readiness. Fully dependency-injected for testing (no `canvas` package needed). |
+| `ItemPicker.tsx` | Step 1 UI — category-grouped selection grid with "x/5" progress. |
+| `PocketUniverseCreator.tsx` | Orchestrates the full flow and fires all analytics events. |
+
+This split (especially `itemsMeta.ts`/`composition.ts` being React-free) is
+the intended pattern for the next two products — keep the deterministic
+layout logic trivially unit-testable, then layer the illustration/UI on top.
 
 ## Routing & GitHub Pages SPA fallback
 

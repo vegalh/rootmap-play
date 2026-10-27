@@ -7,14 +7,18 @@ what must be true before any of this collects real production data.
 
 Source of truth in code: [src/analytics/events.ts](../src/analytics/events.ts).
 
-## Current status (Phase 1)
+## Current status (Phase 2A)
 
 - All ten event names and payload types below are defined and typed.
-- **No creation/rating/feedback/community UI exists yet** (Phase 2/3), so in
-  this phase only `page_view` and the product-card events
-  (`product_card_view`, `product_click`) are actually fired anywhere in the
-  app (from `src/components/layout/Layout.tsx`'s page-view hook and
-  `src/components/ProductCard.tsx`).
+- `page_view` and the product-card events (`product_card_view`,
+  `product_click`) fire from `src/components/layout/Layout.tsx`'s page-view
+  hook and `src/components/ProductCard.tsx`.
+- Pocket Universe (`src/features/pocketUniverse/PocketUniverseCreator.tsx`)
+  now fires `creation_started`, `creation_completed`, `download_clicked`,
+  and `download_succeeded`, and its post-download `FeedbackPrompt` fires
+  `rating_submitted` and `feedback_submitted`. **Little Hero Card and Family
+  Universe do not exist yet**, so none of these fire for those two products.
+- `community_interest_submitted` has no UI yet (planned for a later phase).
 - By default, every event resolves to a **no-op provider**: nothing is sent
   anywhere, regardless of consent, because no Supabase backend is
   configured. The dev console logs tracked events for local debugging only.

@@ -36,23 +36,67 @@ pages were simplified to a single artwork + name/tagline + one honest
 "即将开放" CTA, dropping the old multi-step explanatory layout. No analytics
 events, consent design, or admin placeholder were changed by this pass.
 
-## Phase 2 — Interactive products (not started)
+## Phase 2A — Pocket Universe creator ✅ Complete
 
-Implement the three creation experiences, beginning with Pocket Universe:
+The first of the three creation experiences is fully functional end-to-end:
 
-- Pocket Universe: five-item selection UI, live/preview composition from
-  original SVG elements, downloadable PNG with small RootMap branding.
+- [x] Five-item selection UI (`ItemPicker`) — 30 hand-authored SVG icons
+  across 6 categories (animals/nature/food/vehicles/toys/magical), clear
+  running "x/5" progress, exactly-five enforcement (disables the rest once
+  full, deselect always allowed), accessible `<fieldset>`/`<legend>`/
+  `aria-pressed` structure.
+- [x] Deterministic composition engine (`composition.ts`) — seeds from the
+  sorted selection (order-independent), picks a stable "hero" centerpiece,
+  arranges the other four items around an elliptical orbit ring with
+  seeded jitter, and scatters an ambient star field. Fully unit tested
+  (9 tests) independent of React/DOM.
+- [x] Themed scene renderer (`SceneArt`) — layered background sphere /
+  ground / orbit ring / stars / items, 3 selectable color themes (深夜星空 /
+  黄昏暖阳 / 梦境薰衣草), same layout logic across all themes.
+- [x] Customize controls — regenerate (reshuffles layout, keeps the same
+  hero), theme switch, and "← 重新选择" to return to the picker without
+  losing the previous selection.
+- [x] High-resolution PNG export (`svgExport.ts`) — rasterizes the SVG scene
+  via canvas, then draws the Chinese title/credit text directly with the
+  Canvas 2D API (after awaiting font readiness) for guaranteed correct glyph
+  rendering; enforces a minimum 2000px long edge; small RootMap credit line
+  included on every export. Verified with a real download in Chromium and
+  mobile-chrome (Playwright).
+- [x] Analytics wired end-to-end: `creation_started` (on generating the
+  first composition), `creation_completed` (with selection duration),
+  `download_clicked`, `download_succeeded` — no artwork content or child
+  personal information included in any event.
+- [x] Post-download optional 1–5 star rating (`FeedbackPrompt`, shared across
+  future products) — low ratings (1–3) show the five specified reason chips,
+  high ratings (4–5) show an optional free-text compliment; feedback never
+  blocks or gates the download, which has already completed by the time this
+  UI appears.
+- [x] Tests: unit/component tests for selection enforcement, composition
+  determinism, theme switching, regenerate, edit-selection, PNG export
+  success/error paths, and analytics event firing; Playwright coverage for
+  the full select → preview → download → rating journey on both desktop
+  and mobile viewports.
+
+**Known limitations:** the 30 item illustrations are original but simple
+flat-SVG icons rather than fully painterly artwork — a few (e.g. the
+lollipop spiral, fairy wings) would benefit from a visual polish pass.
+Illustration quality should be revisited before heavy promotion. Mobile
+downloading was verified in Chromium's mobile emulation (Pixel 7) only —
+real iOS Safari save-to-photos behavior for a programmatic anchor download
+has not been verified on a physical device.
+
+## Phase 2B/2C — Little Hero Card & Family Universe (not started)
+
 - Little Hero Card: playful question flow, generated character title/
   superpower/description/illustration, downloadable PNG.
 - Family Universe: family member selection, name/relationship customization
   (common Chinese relationship terms), generated family map, downloadable PNG.
-- Wire up `creation_started`, `creation_completed`, `download_clicked`,
-  `download_succeeded` analytics events (types already exist in
-  `src/analytics/events.ts`).
-- Post-creation rating UI (1–5 stars) with the specified low-rating reason
-  chips, never blocking download.
+- Both product pages currently show an honest "即将开放" state and reuse the
+  same analytics event names and `FeedbackPrompt` component built for
+  Pocket Universe.
 - Community interest invitation UI (separate consent from analytics;
-  contact fields collected only after that consent).
+  contact fields collected only after that consent) — not yet built for any
+  product.
 
 ## Phase 3 — Backend (not started)
 
