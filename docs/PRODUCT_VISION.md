@@ -1,5 +1,14 @@
 # Product Vision
 
+> **A major product direction change is underway.** This document describes
+> the original creation-tool vision (Pocket Universe / Little Hero Card /
+> Family Universe), which is still the live public experience today. The
+> project is being evolved into a curated, admin-managed challenge/prompt
+> platform instead — see [PRODUCT_PIVOT.md](PRODUCT_PIVOT.md) for the new
+> direction and [ROADMAP.md](ROADMAP.md) for current phase status. This
+> document will be retired once the pivot's public experience replaces what
+> it describes below (see Phase 5 in the roadmap).
+
 ## Why RootMap Play exists
 
 RootMap helps parents support children's growth through meaningful

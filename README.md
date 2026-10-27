@@ -11,6 +11,14 @@ brand. It is a separate repository and deployment from RootMapMVP.
 > their product pages honestly show a "即将开放" (coming soon) state instead
 > of a fake working button. See [docs/ROADMAP.md](docs/ROADMAP.md) for
 > what's planned next.
+>
+> **A product pivot is in progress** (currently Phase 1 of 5: schema design
+> only — the public site below is unchanged). RootMap Play is evolving into
+> an admin-curated challenge/prompt-generation platform instead of a
+> client-only AI art tool. See [docs/PRODUCT_PIVOT.md](docs/PRODUCT_PIVOT.md)
+> for the new vision, [docs/SUPABASE_SCHEMA.md](docs/SUPABASE_SCHEMA.md) for
+> the backend schema and admin authorization model, and
+> [docs/ROADMAP.md](docs/ROADMAP.md) for current phase status.
 
 ## What's implemented
 
@@ -124,7 +132,10 @@ without a real server-side router.
 
 ## Documentation
 
-- [docs/PRODUCT_VISION.md](docs/PRODUCT_VISION.md) — product vision, goals, and the three initial experiences.
+- [docs/PRODUCT_VISION.md](docs/PRODUCT_VISION.md) — original product vision, goals, and the three initial experiences (still the live public site today).
+- [docs/PRODUCT_PIVOT.md](docs/PRODUCT_PIVOT.md) — the new challenge-platform product direction and phase plan.
+- [docs/SUPABASE_SCHEMA.md](docs/SUPABASE_SCHEMA.md) — backend schema, Row Level Security policies, and the server-enforced admin authorization model.
+- [supabase/README.md](supabase/README.md) — local Supabase CLI setup and how to connect a real project.
 - [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) — tech stack, folder structure, routing, analytics, and i18n architecture.
 - [docs/ANALYTICS_EVENTS.md](docs/ANALYTICS_EVENTS.md) — the full event catalogue, consent model, and what's required before collecting real data.
 - [docs/ROADMAP.md](docs/ROADMAP.md) — phase-by-phase plan and current status.

@@ -4,6 +4,54 @@ RootMap Play is being built in four phases. This document tracks what's done
 and what's intentionally deferred, so nothing in later phases is silently
 implemented ahead of schedule or silently skipped.
 
+> **Product pivot in progress.** The sections below (original "Phase 1"
+> through "Phase 4") describe the original creation-tool product, which is
+> still live today. A new five-phase plan, superseding this one, is tracked
+> separately immediately below — see [PRODUCT_PIVOT.md](PRODUCT_PIVOT.md)
+> for the full vision.
+
+## Product pivot — Phase 1: Foundation and content model 🚧 In progress
+
+- [x] Audit the existing codebase (analytics abstraction, `FeedbackPrompt`,
+  layout/routing, i18n, test infrastructure — see
+  [PRODUCT_PIVOT.md](PRODUCT_PIVOT.md) for what's reused).
+- [x] Design the Supabase schema: `challenges`, `challenge_questions`,
+  `challenge_artworks`, `analytics_events`, `feedback_submissions`,
+  `community_interest_submissions`, `admin_users` — see
+  [docs/SUPABASE_SCHEMA.md](SUPABASE_SCHEMA.md).
+- [x] Write SQL migrations and Row Level Security policies for every table
+  and for the `challenge-artwork` storage bucket — see
+  [supabase/migrations/](../supabase/migrations).
+- [x] Design and document the server-enforced admin authorization model
+  (Supabase Auth + `admin_users` allow-list + `is_admin()` — never a
+  frontend route guard or email check) — see
+  [docs/SUPABASE_SCHEMA.md](SUPABASE_SCHEMA.md#admin-authorization-model).
+- [x] Add typed frontend content models
+  ([src/content/types.ts](../src/content/types.ts)) and a pure, tested
+  prompt-template validation/resolution utility
+  ([src/content/promptTemplate.ts](../src/content/promptTemplate.ts)).
+- [x] Add a small set of clearly labeled demo challenges
+  ([src/content/demoChallenges.ts](../src/content/demoChallenges.ts) and
+  [supabase/seed.sql](../supabase/seed.sql)) — not rendered by any page yet.
+- [x] Preserve the existing live app (Pocket Universe, homepage, admin
+  "setup required" state) completely unchanged.
+- [ ] Not yet connected to a real Supabase project — see
+  [supabase/README.md](../supabase/README.md) for that next action, which
+  only the project owner can take (credentials cannot be created here).
+
+**Explicitly not done in this phase** (by instruction — stop after Phase 1
+pending approval): the public exhibition homepage/challenge pages, the live
+prompt generator UI, the admin dashboard's real CRUD screens, and real
+analytics ingestion/dashboard. See [PRODUCT_PIVOT.md](PRODUCT_PIVOT.md) for
+Phases 2–5.
+
+---
+
+## Original Pocket Universe roadmap (historical)
+
+The phases below predate the product pivot above and describe the
+creation-tool product that is still live today.
+
 ## Phase 1 — Foundation ✅ Complete
 
 - [x] Inspect the repository.
