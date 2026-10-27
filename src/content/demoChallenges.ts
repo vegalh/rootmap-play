@@ -1,14 +1,20 @@
 /**
  * MOCK / DEMO CONTENT — NOT connected to any backend.
  *
- * These fixtures exist only to exercise src/content/types.ts and
+ * These fixtures exist to exercise src/content/types.ts and
  * src/content/promptTemplate.ts against realistic content (see
- * demoChallenges.test.ts) ahead of the public gallery UI (Phase 2) and the
- * admin editor (Phase 3). Nothing imports this module into any route or
- * page today. Do not render this data as if it were live/published
- * content — it is illustrative only, and the backend equivalent used for
- * local Supabase CLI testing (supabase/seed.sql) is a separate,
- * independently hand-written fixture (see docs/PRODUCT_PIVOT.md).
+ * demoChallenges.test.ts), and — as of Phase 2 — to back the public
+ * gallery and challenge pages via src/content/contentRepository.ts ahead
+ * of a real Supabase connection. The backend equivalent used for local
+ * Supabase CLI testing (supabase/seed.sql) is a separate, independently
+ * hand-written fixture (see docs/PRODUCT_PIVOT.md).
+ *
+ * `artworks[].storagePath` values below (`placeholder/...`) do not point
+ * at real files — no example artwork has been supplied yet. They exist so
+ * `ArtworkPlaceholder` has a stable key and a real `altText` describing
+ * the intended image, per the "identify the missing asset, don't fake it"
+ * requirement. Replacing them with real uploaded artwork later is a data
+ * change only.
  */
 import type { Challenge } from './types'
 
@@ -25,7 +31,28 @@ export const DEMO_CHALLENGES: Challenge[] = [
     ctaLabel: '我也想试试',
     status: 'published',
     displayOrder: 1,
-    artworks: [],
+    artworks: [
+      {
+        id: 'demo-pu-art1',
+        challengeId: 'demo-pocket-universe',
+        storagePath: 'placeholder/pocket-universe-1',
+        title: '宝宝的口袋宇宙',
+        caption: '幻想世界插画示例',
+        altText:
+          '一幅温暖柔和的幻想世界插画：漂浮的小行星上长着孩子喜欢的事物，整体光线温柔、构图连贯。',
+        isFeatured: true,
+        displayOrder: 1,
+      },
+      {
+        id: 'demo-pu-art2',
+        challengeId: 'demo-pocket-universe',
+        storagePath: 'placeholder/pocket-universe-2',
+        caption: '细节特写示例',
+        altText: '同一幅插画的局部细节特写，展示柔和的水彩质感与手绘线条。',
+        isFeatured: false,
+        displayOrder: 2,
+      },
+    ],
     questions: [
       {
         id: 'demo-pu-q1',
@@ -76,7 +103,19 @@ export const DEMO_CHALLENGES: Challenge[] = [
     ctaLabel: '我也想试试',
     status: 'published',
     displayOrder: 2,
-    artworks: [],
+    artworks: [
+      {
+        id: 'demo-sr-art1',
+        challengeId: 'demo-secret-room',
+        storagePath: 'placeholder/secret-room-1',
+        title: '宝宝的秘密房间',
+        caption: '儿童房间插画示例',
+        altText:
+          '一幅温馨奇幻的儿童房间插画：柔和的室内光线洒在木质家具与藏着小秘密的角落上。',
+        isFeatured: true,
+        displayOrder: 1,
+      },
+    ],
     questions: [
       {
         id: 'demo-sr-q1',

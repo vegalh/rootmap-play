@@ -2,7 +2,9 @@ import { expect, test } from '@playwright/test'
 
 test.describe('Routing', () => {
   const routes: Array<[string, string]> = [
-    ['', '把宝宝喜欢的东西'],
+    ['', '欢迎来到'],
+    ['challenges/pocket-universe', '宝宝的口袋宇宙'],
+    ['challenges/secret-room', '宝宝的秘密房间'],
     ['pocket-universe', '宝宝的口袋宇宙'],
     ['little-hero', '宝宝的隐藏角色'],
     ['family-universe', '我们家的亲戚关系宇宙'],
@@ -36,7 +38,7 @@ test.describe('Routing', () => {
     await page.goto('little-hero')
     await page.getByRole('banner').getByRole('link', { name: /RootMap/ }).click()
     await expect(page).toHaveURL(/\/rootmap-play\/?$/)
-    await expect(page.getByRole('heading', { level: 1 })).toContainText('把宝宝喜欢的东西')
+    await expect(page.getByRole('heading', { level: 1 })).toContainText('欢迎来到')
   })
 
   test('the header privacy link is reachable from any page', async ({ page }) => {

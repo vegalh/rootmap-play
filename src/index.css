@@ -1,25 +1,35 @@
 @import 'tailwindcss';
 
 @theme {
-  /* Warm, editorial palette — intentionally not a generic SaaS blue/purple. */
-  --color-cream-50: #fdfaf4;
-  --color-cream-100: #f8f1e3;
-  --color-cream-200: #f0e5cd;
+  /*
+   * "Little House" palette (Phase 2 visual direction) — a real, lived-in
+   * children's room meets illustrated-picture-book warmth: warm ivory and
+   * oatmeal paper tones, walnut/deep-ink-brown text, muted (not neon)
+   * terracotta, a quiet sage green, and a soft honey accent. Deliberately
+   * restrained — no pure white/black, no saturated primaries. Every
+   * foreground/background pairing below is verified to meet WCAG AA
+   * contrast (>=4.5:1 for text-sized use). Token *names* are kept stable
+   * from Phase 1 so every existing component inherits this palette for
+   * free; only the underlying hex values changed.
+   */
+  --color-cream-50: #f6f0e5; /* warm ivory */
+  --color-cream-100: #efe4d0; /* oatmeal */
+  --color-cream-200: #e3d3b8; /* deeper oatmeal, borders/hover */
 
-  --color-ink-700: #3a3027;
-  --color-ink-800: #2b2219;
-  --color-ink-900: #1f1811;
+  --color-ink-700: #6b5847; /* walnut brown — secondary text (used with opacity) */
+  --color-ink-800: #4a3c30; /* primary body text */
+  --color-ink-900: #352b22; /* deep ink brown — headings */
 
-  --color-terracotta-400: #e78a63;
-  --color-terracotta-500: #d9704a;
-  --color-terracotta-600: #c25a37;
+  --color-terracotta-400: #cda08b; /* light accent / focus rings */
+  --color-terracotta-500: #9c5e49; /* muted terracotta — primary CTA */
+  --color-terracotta-600: #854a37; /* CTA hover */
 
-  --color-pine-500: #33594f;
-  --color-pine-600: #264740;
-  --color-pine-700: #1c3732;
+  --color-pine-500: #7c8a6b; /* sage — lighter accent */
+  --color-pine-600: #4c5a42; /* sage — secondary button bg */
+  --color-pine-700: #37432e; /* deep sage — badge text / dark fills */
 
-  --color-gold-400: #e7b74f;
-  --color-gold-500: #d9a23a;
+  --color-gold-400: #e3c480; /* honey — light */
+  --color-gold-500: #d1a355; /* honey — base, star fill, badge bg */
 
   /* Fraunces covers Latin display type; Noto Sans SC is the only CJK family
      actually loaded (see index.html), so it is listed as the fallback for
@@ -29,6 +39,27 @@
 
   --shadow-soft: 0 20px 45px -25px rgba(43, 34, 25, 0.45);
   --shadow-card: 0 12px 30px -18px rgba(43, 34, 25, 0.35);
+}
+
+@layer utilities {
+  /*
+   * A barely-there paper grain, used sparingly behind large warm panels
+   * (the homepage hero, the challenge "open book" page) to suggest
+   * handmade paper without reducing text readability. Pure CSS — no
+   * image asset — so it costs nothing to load and respects
+   * prefers-reduced-motion trivially (it is static).
+   */
+  .bg-paper-grain {
+    background-image:
+      radial-gradient(rgba(53, 43, 34, 0.05) 1px, transparent 1px),
+      radial-gradient(rgba(53, 43, 34, 0.04) 1px, transparent 1px);
+    background-size:
+      3px 3px,
+      7px 7px;
+    background-position:
+      0 0,
+      2px 3px;
+  }
 }
 
 @layer base {

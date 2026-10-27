@@ -45,6 +45,61 @@ prompt generator UI, the admin dashboard's real CRUD screens, and real
 analytics ingestion/dashboard. See [PRODUCT_PIVOT.md](PRODUCT_PIVOT.md) for
 Phases 2–5.
 
+## Product pivot — Phase 2: Public gallery and prompt generator ✅ Complete (awaiting approval for Phase 3)
+
+- [x] Retinted the design tokens to the warm, illustrated "Little House"
+  direction (new hex values on the same `@theme` variable names in
+  [src/index.css](../src/index.css), so every existing component re-skinned
+  automatically) and added an original SVG hero illustration
+  ([src/components/illustrations/LittleHouseScene.tsx](../src/components/illustrations/LittleHouseScene.tsx)).
+- [x] Added a framework-agnostic content-access seam
+  ([src/content/contentRepository.ts](../src/content/contentRepository.ts) +
+  [src/content/useChallenges.ts](../src/content/useChallenges.ts)) that every
+  public page reads through — the one place a future Supabase-backed
+  implementation will replace `demoContentRepository`.
+- [x] Built the gallery homepage ([src/pages/HomePage.tsx](../src/pages/HomePage.tsx)):
+  a welcome hero, one featured challenge, and a grid of the rest, all driven
+  by published `Challenge` content — never a hardcoded list.
+- [x] Built the challenge detail page
+  ([src/pages/ChallengeDetailPage.tsx](../src/pages/ChallengeDetailPage.tsx))
+  at `/challenges/:slug`: example artwork, intro copy, a dynamically
+  rendered question form, and the generated prompt result — one page that
+  works for any admin-published challenge.
+- [x] Built the dynamic questionnaire
+  ([src/features/challengeCreator/ChallengeQuestionnaire.tsx](../src/features/challengeCreator/ChallengeQuestionnaire.tsx))
+  and the prompt result view with copy/ChatGPT/edit-answers actions
+  ([src/features/challengeCreator/PromptResult.tsx](../src/features/challengeCreator/PromptResult.tsx)),
+  both reusing Phase 1's `validateAnswers`/`resolvePromptTemplate` rather
+  than reimplementing validation or substitution logic.
+- [x] Added `ArtworkPlaceholder` — every example-image slot is honestly
+  labeled "示例插画 · 待替换" with the intended `altText` shown as a caption,
+  since no real example artwork has been supplied yet (see "Known gaps"
+  below).
+- [x] Added the five Phase 2 analytics events (`challenge_opened`,
+  `prompt_started`, `prompt_generated`, `prompt_copied`,
+  `chatgpt_outbound_clicked`) — see
+  [docs/ANALYTICS_EVENTS.md](ANALYTICS_EVENTS.md).
+- [x] Added the `/challenges/:slug` route alongside (not replacing) the
+  legacy `/pocket-universe`, `/little-hero`, `/family-universe` routes,
+  which remain reachable by direct URL per the Pocket Universe preservation
+  requirement.
+- [x] Unit tests (`contentRepository`, `ChallengeQuestionnaire`,
+  `PromptResult`, `ChallengeDetailPage`, updated `HomePage`/`App` specs) and
+  Playwright e2e coverage (updated `home`/`navigation` specs, a new
+  `challenge-flow` spec covering gallery → detail → generate → copy → edit,
+  run on both desktop and mobile viewports).
+
+**Known gaps, carried forward on purpose:**
+- No real example artwork exists yet for any challenge — every artwork slot
+  renders `ArtworkPlaceholder` instead of a finished image. Replacing a
+  placeholder with real artwork is a data change (`artworks[].storagePath`),
+  not a redesign.
+- Still backed entirely by `demoChallenges.ts`/`demoContentRepository` — no
+  Supabase project has been connected (out of scope by instruction; see
+  Phase 1 above).
+- The admin dashboard still only shows its "setup required" placeholder —
+  content CRUD is Phase 3.
+
 ---
 
 ## Original Pocket Universe roadmap (historical)

@@ -88,8 +88,8 @@ one from the other.
 
 ## Phase plan
 
-1. **Foundation and content model** *(this document's phase — see status in [ROADMAP.md](ROADMAP.md))*: schema, RLS, admin authorization design, typed content models, demo challenges.
-2. **Public gallery and prompt generator**: exhibition homepage, challenge detail pages, configurable question forms, the live prompt generator UI, copy/ChatGPT actions.
+1. **Foundation and content model** ✅ *(see status in [ROADMAP.md](ROADMAP.md))*: schema, RLS, admin authorization design, typed content models, demo challenges.
+2. **Public gallery and prompt generator** ✅ *(complete, awaiting approval for Phase 3 — see status in [ROADMAP.md](ROADMAP.md))*: exhibition homepage, challenge detail pages, configurable question forms, the live prompt generator UI, copy/ChatGPT actions.
 3. **Admin content management**: secure login, challenge/artwork CRUD, question/template editor with live preview, publishing/ordering, private preview.
 4. **Analytics and feedback**: secure event ingestion (incl. abuse controls), the real analytics dashboard, feedback/questionnaire review, community-interest management, CSV export.
 5. **Final polish and migration cleanup**: mobile/visual polish, sharing metadata, removing the superseded SVG generator, documentation pass.

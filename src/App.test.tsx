@@ -12,9 +12,19 @@ function renderAt(path: string) {
 }
 
 describe('App routing', () => {
-  it('renders the home page at /', () => {
+  it('renders the home page at /', async () => {
     renderAt('/')
-    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('把宝宝喜欢的东西')
+    expect(await screen.findByRole('heading', { level: 1 })).toHaveTextContent('欢迎来到')
+  })
+
+  it('renders a challenge detail page at /challenges/:slug', async () => {
+    renderAt('/challenges/pocket-universe')
+    expect(await screen.findByRole('heading', { level: 1 })).toHaveTextContent('宝宝的口袋宇宙')
+  })
+
+  it('renders a friendly not-found state for an unknown challenge slug', async () => {
+    renderAt('/challenges/does-not-exist')
+    expect(await screen.findByText('这个挑战还没准备好')).toBeInTheDocument()
   })
 
   it.each([

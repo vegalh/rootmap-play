@@ -7,7 +7,22 @@ what must be true before any of this collects real production data.
 
 Source of truth in code: [src/analytics/events.ts](../src/analytics/events.ts).
 
-## Current status (Phase 2A)
+## Current status (Phase 2)
+
+- Five new events cover the challenge-platform flow: `challenge_opened`,
+  `prompt_started`, `prompt_generated`, `prompt_copied`, and
+  `chatgpt_outbound_clicked`. Each carries only `challengeSlug` (plus an
+  optional `source` on `challenge_opened`) — never answer text or the
+  generated prompt itself.
+- `challenge_opened` fires once when `ChallengeDetailPage` mounts, with
+  `source` set to `'gallery_featured'`, `'gallery_grid'`, or `'direct'`
+  depending on how the parent arrived.
+- `prompt_started` fires on the first interaction with the questionnaire.
+  `prompt_generated` fires once validation passes and a prompt is
+  resolved. `prompt_copied` fires on the copy button; the ChatGPT button
+  fires `chatgpt_outbound_clicked` immediately before the new tab opens.
+
+## Prior status (Phase 2A)
 
 - All ten event names and payload types below are defined and typed.
 - `page_view` and the product-card events (`product_card_view`,
@@ -59,9 +74,17 @@ correctly with zero backend configuration, per the project's requirements.
 | `rating_submitted` | A parent submits a 1–5 star rating | `productId`, `rating` (1-5) |
 | `feedback_submitted` | Optional feedback text/reason is submitted | `productId`, `rating`, `reason?`, `comment?` |
 | `community_interest_submitted` | A parent opts into the community invitation | `interests` (array of `'community' \| 'product_testing' \| 'suggestions'`) |
+| `challenge_opened` | The challenge detail page mounts | `challengeSlug`, `source?` |
+| `prompt_started` | A parent first interacts with the questionnaire | `challengeSlug` |
+| `prompt_generated` | A prompt is successfully resolved from valid answers | `challengeSlug` |
+| `prompt_copied` | The "复制创作咒语" button is pressed | `challengeSlug` |
+| `chatgpt_outbound_clicked` | The "打开 ChatGPT" link is clicked | `challengeSlug` |
 
 `productId` is always one of `'pocket-universe' | 'little-hero' |
-'family-universe'` (`PRODUCT_IDS` in `events.ts`).
+'family-universe'` (`PRODUCT_IDS` in `events.ts`) for the legacy
+product-card events. The new challenge events above use `challengeSlug`
+(a plain string, since challenges are admin-managed content, not a fixed
+closed set) instead of `productId`.
 
 ### Low-rating reasons
 

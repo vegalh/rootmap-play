@@ -4,34 +4,50 @@ RootMap Play is a playful, shareable collection of interactive digital
 experiences for families with children aged 0–6, built under the RootMap
 brand. It is a separate repository and deployment from RootMapMVP.
 
-> **Status: Phase 2A — Pocket Universe creator.** The foundation (site,
-> navigation, design system, analytics/admin scaffolding) and a fully
-> functional Pocket Universe creation experience are implemented. Little
-> Hero Card and Family Universe are intentionally **not yet implemented** —
-> their product pages honestly show a "即将开放" (coming soon) state instead
-> of a fake working button. See [docs/ROADMAP.md](docs/ROADMAP.md) for
-> what's planned next.
+> **A product pivot is in progress** (currently Phase 2 of 5: public gallery
+> and prompt generator, complete and awaiting approval for Phase 3).
+> RootMap Play is evolving from a client-only AI-art tool into an
+> admin-curated "creative challenge" platform: a warm, illustrated gallery
+> homepage (**"The Little House"**) presents open-ended creative challenges;
+> picking one opens a dynamic question form that generates a text prompt
+> for the parent to paste into ChatGPT or another image tool themselves —
+> RootMap Play never calls an image-generation API. See
+> [docs/PRODUCT_PIVOT.md](docs/PRODUCT_PIVOT.md) for the full vision,
+> [docs/SUPABASE_SCHEMA.md](docs/SUPABASE_SCHEMA.md) for the backend schema
+> and admin authorization model, and [docs/ROADMAP.md](docs/ROADMAP.md) for
+> current phase status.
 >
-> **A product pivot is in progress** (currently Phase 1 of 5: schema design
-> only — the public site below is unchanged). RootMap Play is evolving into
-> an admin-curated challenge/prompt-generation platform instead of a
-> client-only AI art tool. See [docs/PRODUCT_PIVOT.md](docs/PRODUCT_PIVOT.md)
-> for the new vision, [docs/SUPABASE_SCHEMA.md](docs/SUPABASE_SCHEMA.md) for
-> the backend schema and admin authorization model, and
-> [docs/ROADMAP.md](docs/ROADMAP.md) for current phase status.
+> The original Pocket Universe creation tool (Phase 2A, below) remains fully
+> live at `/pocket-universe`, `/little-hero`, and `/family-universe` — it's
+> simply no longer linked from the homepage, in favor of the new gallery.
 
 ## What's implemented
 
-- Homepage as a lightweight, art-first promotional entry point (not a SaaS
-  landing page) — one hero experience, a short headline, one primary CTA,
-  and two secondary experience cards.
-- **Pocket Universe** (`/pocket-universe`) is fully functional: pick exactly
-  5 of 30 illustrated items across 6 categories, generate a deterministic
-  personalized illustrated scene, switch between 3 color themes, regenerate
-  the layout, return to edit the selection, and download a ≥2000px branded
-  PNG. See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for how it's built.
+- **The Little House gallery homepage**: a warm, illustrated entrance
+  presenting one featured creative challenge and a grid of the rest, all
+  read from a typed content model (`src/content/`) through a
+  content-access abstraction designed to swap in a real Supabase-backed
+  implementation later without touching any page or component.
+- **Challenge detail pages** (`/challenges/:slug`): example artwork (clearly
+  labeled as a placeholder until real artwork is supplied — RootMap Play
+  never fakes finished art), an intro, a dynamically rendered question
+  form (short/long text, single/multiple choice), and a generated prompt
+  result with copy-to-clipboard and "open ChatGPT" actions. One page
+  renders every admin-published challenge — no per-challenge hardcoded
+  pages.
+- A deterministic, `eval`-free prompt-template engine
+  (`src/content/promptTemplate.ts`) that validates answers and resolves
+  named placeholders into the final prompt text — reused by both the
+  question form and the detail page, never reimplemented.
+- **Pocket Universe** (`/pocket-universe`, still fully functional, reachable
+  by direct link): pick exactly 5 of 30 illustrated items across 6
+  categories, generate a deterministic personalized illustrated scene,
+  switch between 3 color themes, regenerate the layout, return to edit the
+  selection, and download a ≥2000px branded PNG. See
+  [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for how it's built.
 - Little Hero Card and Family Universe product routes exist with original
-  SVG illustrations and an honest "即将开放" state.
+  SVG illustrations and an honest "即将开放" state (also no longer linked
+  from the homepage, still reachable by direct link).
 - Responsive header (logo + privacy link only, no hamburger menu) and a
   minimal footer.
 - A privacy notice banner that gates any future analytics network calls on
@@ -40,7 +56,9 @@ brand. It is a separate repository and deployment from RootMapMVP.
   default provider and a Supabase-ready provider stub that only activates
   once a backend is configured, enabled, and consented to. Pocket Universe
   fires `creation_started`/`creation_completed`/`download_clicked`/
-  `download_succeeded`, and its post-download rating prompt fires
+  `download_succeeded`; the challenge gallery fires
+  `challenge_opened`/`prompt_started`/`prompt_generated`/`prompt_copied`/
+  `chatgpt_outbound_clicked`; and the post-download rating prompt fires
   `rating_submitted`/`feedback_submitted` — see
   [docs/ANALYTICS_EVENTS.md](docs/ANALYTICS_EVENTS.md).
 - A `/admin` route that honestly reports "setup required" instead of showing
@@ -52,11 +70,17 @@ brand. It is a separate repository and deployment from RootMapMVP.
 
 ## What's intentionally NOT implemented yet
 
-- Little Hero Card and Family Universe creation experiences — Phase 2B/2C.
-- Community interest form — Phase 2/3.
-- Supabase database schema, event ingestion, and authenticated admin access —
-  Phase 3.
-- Real analytics charts/metrics in the admin dashboard — Phase 4.
+- Real example artwork for any challenge — every artwork slot is an
+  honestly labeled placeholder until real images are supplied.
+- A live Supabase backend — the gallery/challenges above are still backed by
+  demo content (`src/content/demoChallenges.ts`); no credentials or project
+  have been connected.
+- Admin content management (secure login, challenge/artwork CRUD, template
+  editor with live preview) — Phase 3.
+- Real analytics ingestion/dashboard and feedback review — Phase 4.
+- Little Hero Card and Family Universe creation experiences (the SVG
+  generator itself, not the gallery around it) — Phase 2B/2C of the
+  original roadmap, separate from the challenge-platform pivot.
 
 See [docs/ROADMAP.md](docs/ROADMAP.md) for details.
 

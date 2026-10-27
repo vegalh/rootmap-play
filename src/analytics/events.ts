@@ -30,6 +30,11 @@ export const ANALYTICS_EVENT_NAMES = {
   RATING_SUBMITTED: 'rating_submitted',
   FEEDBACK_SUBMITTED: 'feedback_submitted',
   COMMUNITY_INTEREST_SUBMITTED: 'community_interest_submitted',
+  CHALLENGE_OPENED: 'challenge_opened',
+  PROMPT_STARTED: 'prompt_started',
+  PROMPT_GENERATED: 'prompt_generated',
+  PROMPT_COPIED: 'prompt_copied',
+  CHATGPT_OUTBOUND_CLICKED: 'chatgpt_outbound_clicked',
 } as const
 
 export type AnalyticsEventName =
@@ -100,6 +105,34 @@ export interface CommunityInterestSubmittedProperties {
   interests: Array<'community' | 'product_testing' | 'suggestions'>
 }
 
+/**
+ * Challenge-platform events (Phase 2). `challengeSlug` identifies *which*
+ * challenge, never any detail about the child or the parent's answers —
+ * answer text and the generated prompt text itself must never be sent to
+ * analytics (see docs/ANALYTICS_EVENTS.md).
+ */
+export interface ChallengeOpenedProperties {
+  challengeSlug: string
+  /** Where the visit came from, e.g. "gallery_featured", "gallery_grid", or "direct". */
+  source?: string
+}
+
+export interface PromptStartedProperties {
+  challengeSlug: string
+}
+
+export interface PromptGeneratedProperties {
+  challengeSlug: string
+}
+
+export interface PromptCopiedProperties {
+  challengeSlug: string
+}
+
+export interface ChatGptOutboundClickedProperties {
+  challengeSlug: string
+}
+
 /** Maps each event name to its properties type for compile-time safety. */
 export interface AnalyticsEventPropertiesMap {
   page_view: PageViewProperties
@@ -112,4 +145,9 @@ export interface AnalyticsEventPropertiesMap {
   rating_submitted: RatingSubmittedProperties
   feedback_submitted: FeedbackSubmittedProperties
   community_interest_submitted: CommunityInterestSubmittedProperties
+  challenge_opened: ChallengeOpenedProperties
+  prompt_started: PromptStartedProperties
+  prompt_generated: PromptGeneratedProperties
+  prompt_copied: PromptCopiedProperties
+  chatgpt_outbound_clicked: ChatGptOutboundClickedProperties
 }
