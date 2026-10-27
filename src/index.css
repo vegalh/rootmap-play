@@ -1,0 +1,60 @@
+@import 'tailwindcss';
+
+@theme {
+  /* Warm, editorial palette — intentionally not a generic SaaS blue/purple. */
+  --color-cream-50: #fdfaf4;
+  --color-cream-100: #f8f1e3;
+  --color-cream-200: #f0e5cd;
+
+  --color-ink-700: #3a3027;
+  --color-ink-800: #2b2219;
+  --color-ink-900: #1f1811;
+
+  --color-terracotta-400: #e78a63;
+  --color-terracotta-500: #d9704a;
+  --color-terracotta-600: #c25a37;
+
+  --color-pine-500: #33594f;
+  --color-pine-600: #264740;
+  --color-pine-700: #1c3732;
+
+  --color-gold-400: #e7b74f;
+  --color-gold-500: #d9a23a;
+
+  /* Fraunces covers Latin display type; Noto Sans SC is the only CJK family
+     actually loaded (see index.html), so it is listed as the fallback for
+     Chinese glyphs in headings rather than an unloaded serif CJK font. */
+  --font-display: 'Fraunces', 'Noto Sans SC', ui-serif, serif;
+  --font-body: 'Noto Sans SC', ui-sans-serif, system-ui, sans-serif;
+
+  --shadow-soft: 0 20px 45px -25px rgba(43, 34, 25, 0.45);
+  --shadow-card: 0 12px 30px -18px rgba(43, 34, 25, 0.35);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-cream-50 font-body text-ink-800 antialiased;
+    font-feature-settings: 'palt' 1;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display text-ink-900;
+  }
+
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-terracotta-500;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}

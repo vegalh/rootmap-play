@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <title>RootMap Play</title>
+    <script>
+      // GitHub Pages has no server-side rewrites, so a direct visit to a
+      // route like /rootmap-play/pocket-universe hits this 404 page.
+      // We encode the real path into a query string and redirect to the
+      // app's index.html, which restores it via the inline script in
+      // index.html (the well-known "spa-github-pages" technique).
+      // pathSegmentsToKeep = 1 keeps the "/rootmap-play" base segment.
+      var pathSegmentsToKeep = 1
+      var location = window.location
+      var segments = location.pathname.split('/')
+      var redirectPath =
+        '/' +
+        segments.slice(1, 1 + pathSegmentsToKeep).join('/') +
+        '/?p=/' +
+        segments.slice(1 + pathSegmentsToKeep).join('/').replace(/&/g, '~and~') +
+        (location.search ? '&q=' + location.search.slice(1).replace(/&/g, '~and~') : '') +
+        location.hash
+
+      window.sessionStorage.redirect = location.href
+      location.replace(redirectPath)
+    </script>
+  </head>
+  <body></body>
+</html>

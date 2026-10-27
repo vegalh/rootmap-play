@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="%BASE_URL%favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#fdfaf4" />
+    <title>RootMap Play · 为孩子创造值得珍藏的奇妙世界</title>
+    <meta
+      name="description"
+      content="RootMap Play 是 RootMap 旗下的趣味创作乐园，为 0-6 岁孩子的家庭提供口袋宇宙、隐藏角色卡与家庭关系地图等可下载、可分享的互动创作体验。"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Noto+Sans+SC:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      // Restores the real path after a GitHub Pages 404.html redirect.
+      // See public/404.html for the matching encode step. This is the
+      // well-known "spa-github-pages" technique, reimplemented minimally
+      // so deep links (e.g. /pocket-universe) work on static hosting.
+      (function () {
+        var redirect = window.sessionStorage.redirect
+        delete window.sessionStorage.redirect
+        if (redirect && redirect !== window.location.href) {
+          window.history.replaceState(null, '', redirect)
+        }
+      })()
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
