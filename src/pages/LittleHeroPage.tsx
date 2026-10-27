@@ -6,12 +6,9 @@ export function LittleHeroPage() {
   const copy = t.products.littleHero
   return (
     <ProductDetailLayout
-      eyebrow={copy.eyebrow}
       name={copy.name}
       englishName={copy.englishName}
       tagline={copy.tagline}
-      description={copy.description}
-      steps={copy.steps}
       comingSoonNotice={copy.comingSoonNotice}
       illustration={LittleHeroIllustration}
     />

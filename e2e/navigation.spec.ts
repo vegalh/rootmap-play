@@ -2,7 +2,7 @@ import { expect, test } from '@playwright/test'
 
 test.describe('Routing', () => {
   const routes: Array<[string, string]> = [
-    ['', '为孩子创造一段'],
+    ['', '把宝宝喜欢的东西'],
     ['pocket-universe', '宝宝的口袋宇宙'],
     ['little-hero', '宝宝的隐藏角色'],
     ['family-universe', '我们家的亲戚关系宇宙'],
@@ -24,21 +24,25 @@ test.describe('Routing', () => {
     await expect(page).toHaveURL(/\/rootmap-play\/?$/)
   })
 
-  test('header navigation links move between product pages', async ({ page }) => {
+  test('the header has no hamburger menu on mobile — only the logo and a privacy link', async ({
+    page,
+  }) => {
     await page.goto('')
+    await expect(page.getByRole('button', { name: /菜单|menu/i })).toHaveCount(0)
+    await expect(page.getByRole('banner').getByRole('link', { name: '隐私说明' })).toBeVisible()
+  })
 
-    // On narrow viewports the links live behind the hamburger menu.
-    const menuToggle = page.getByRole('button', { name: '菜单' })
-    if (await menuToggle.isVisible()) {
-      await menuToggle.click()
-    }
-    await page.getByRole('navigation').getByRole('link', { name: '隐藏角色' }).click()
-    await expect(page.getByRole('heading', { level: 1 })).toContainText('宝宝的隐藏角色')
+  test('the logo always returns to the homepage from a product page', async ({ page }) => {
+    await page.goto('little-hero')
+    await page.getByRole('banner').getByRole('link', { name: /RootMap/ }).click()
+    await expect(page).toHaveURL(/\/rootmap-play\/?$/)
+    await expect(page.getByRole('heading', { level: 1 })).toContainText('把宝宝喜欢的东西')
+  })
 
-    if (await menuToggle.isVisible()) {
-      await menuToggle.click()
-    }
-    await page.getByRole('navigation').getByRole('link', { name: '亲戚宇宙' }).click()
-    await expect(page.getByRole('heading', { level: 1 })).toContainText('我们家的亲戚关系宇宙')
+  test('the header privacy link is reachable from any page', async ({ page }) => {
+    await page.goto('pocket-universe')
+    await page.getByRole('banner').getByRole('link', { name: '隐私说明' }).click()
+    await expect(page).toHaveURL(/privacy/)
+    await expect(page.getByRole('heading', { level: 1 })).toContainText('隐私说明')
   })
 })

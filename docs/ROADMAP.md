@@ -12,7 +12,7 @@ implemented ahead of schedule or silently skipped.
 - [x] Set up routing (React Router, GitHub Pages-aware basename + SPA fallback).
 - [x] Build the RootMap Play homepage.
 - [x] Create three product cards and product routes (honest "coming soon" state).
-- [x] Create reusable design components (Button, Badge, Container, SectionHeading, ProductCard, ProductDetailLayout).
+- [x] Create reusable design components (Button, Badge, Container, ArtworkFrame, ProductCard, ProductDetailLayout).
 - [x] Add a responsive header and footer.
 - [x] Create the analytics abstraction (typed events, consent-aware, Supabase-ready stub, safe no-op default).
 - [x] Create a secure placeholder for the admin dashboard (setup-required state, no hardcoded auth, no mock data).
@@ -24,6 +24,17 @@ only): the three creation experiences themselves, rating/feedback UI,
 community interest form, any Supabase schema/backend, and real admin
 dashboard data. Product pages exist and look finished, but their primary
 action is honestly disabled rather than faked.
+
+**Homepage/UX redesign pass (post-Phase-1):** the original Phase 1 homepage
+read as a full SaaS landing page (brand intro, mission/trust sections, three
+equal-weight product cards). It was redesigned into a lightweight promotional
+mini-experience: a minimal header (logo + a single privacy link, no
+hamburger menu), one hero section featuring Pocket Universe with a framed
+"art print" preview (`ArtworkFrame`) and a single primary CTA, two compact
+secondary experience cards below it, and a minimal footer. Product detail
+pages were simplified to a single artwork + name/tagline + one honest
+"即将开放" CTA, dropping the old multi-step explanatory layout. No analytics
+events, consent design, or admin placeholder were changed by this pass.
 
 ## Phase 2 — Interactive products (not started)
 

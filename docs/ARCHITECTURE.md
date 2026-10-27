@@ -21,9 +21,10 @@ src/
   components/
     illustrations/    Original SVG artwork (logo, hero blobs, product art)
     layout/           Header, Footer, Layout (wraps <Outlet /> + tracking)
-    ui/                Design-system primitives (Button, Badge, Container, SectionHeading)
-    ProductCard.tsx           Home page product grid card (impression + click tracking)
-    ProductDetailLayout.tsx   Shared layout for the 3 product detail pages
+    ui/                Design-system primitives (Button, Badge, Container)
+    ArtworkFrame.tsx          "Art print" presentation for product illustrations
+    ProductCard.tsx           Secondary experience card (impression + click tracking)
+    ProductDetailLayout.tsx   Shared compact layout for the 3 product detail pages
     PrivacyNoticeBanner.tsx   First-visit consent banner
   config/
     env.ts             Typed, centralised environment variable access
@@ -134,8 +135,9 @@ blue/purple SaaS look. Two Google Fonts are loaded in `index.html`:
 and, as a fallback, display text — Fraunces has no CJK glyphs, and no
 separate CJK serif family is loaded, so Chinese headings render in
 `Noto Sans SC`). `src/components/ui/` holds the shared primitives (Button
-variants, Badge, Container, SectionHeading); `src/components/illustrations/`
-holds original SVG artwork used across the homepage and product pages.
+variants, Badge, Container); `src/components/illustrations/` holds original
+SVG artwork used across the homepage and product pages, presented as framed
+"art prints" via `ArtworkFrame.tsx`.
 
 ## Testing
 

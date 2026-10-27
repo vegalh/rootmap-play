@@ -14,11 +14,11 @@ describe('PrivacyNoticeBanner', () => {
     const user = userEvent.setup()
     renderWithRouter(<PrivacyNoticeBanner />)
 
-    expect(screen.getByText(/匿名的产品使用数据/)).toBeInTheDocument()
+    expect(screen.getByText(/匿名使用数据/)).toBeInTheDocument()
 
     await user.click(screen.getByRole('button', { name: '好的，我知道了' }))
 
-    expect(screen.queryByText(/匿名的产品使用数据/)).not.toBeInTheDocument()
+    expect(screen.queryByText(/匿名使用数据/)).not.toBeInTheDocument()
     expect(getConsentStatus()).toBe('accepted')
   })
 
@@ -28,13 +28,13 @@ describe('PrivacyNoticeBanner', () => {
 
     await user.click(screen.getByRole('button', { name: '暂不同意' }))
 
-    expect(screen.queryByText(/匿名的产品使用数据/)).not.toBeInTheDocument()
+    expect(screen.queryByText(/匿名使用数据/)).not.toBeInTheDocument()
     expect(getConsentStatus()).toBe('declined')
   })
 
   it('does not render again once a choice was already made', () => {
     window.localStorage.setItem('rootmap-play:analytics-consent', 'accepted')
     renderWithRouter(<PrivacyNoticeBanner />)
-    expect(screen.queryByText(/匿名的产品使用数据/)).not.toBeInTheDocument()
+    expect(screen.queryByText(/匿名使用数据/)).not.toBeInTheDocument()
   })
 })

@@ -8,7 +8,6 @@ import { Badge } from './ui/Badge'
 interface ProductCardProps {
   productId: ProductId
   href: string
-  eyebrow: string
   name: string
   tagline: string
   illustration: ComponentType<{ className?: string }>
@@ -16,13 +15,13 @@ interface ProductCardProps {
 }
 
 /**
- * Homepage product tile. Reports an impression once when it first becomes
- * visible, and a click event when the parent navigates into the product.
+ * Compact secondary experience tile shown below the homepage hero.
+ * Reports an impression once when it first becomes visible, and a click
+ * event when the parent navigates into the product.
  */
 export function ProductCard({
   productId,
   href,
-  eyebrow,
   name,
   tagline,
   illustration: Illustration,
@@ -59,21 +58,15 @@ export function ProductCard({
       onClick={() => analytics.track('product_click', { productId, source: 'home_grid' })}
       className="group flex flex-col overflow-hidden rounded-3xl bg-cream-100 shadow-[var(--shadow-card)] transition-transform duration-300 hover:-translate-y-1"
     >
-      <div className="aspect-[4/3] w-full overflow-hidden bg-pine-700">
+      <div className="relative aspect-[4/3] w-full overflow-hidden bg-pine-700">
         <Illustration className="h-full w-full transition-transform duration-500 group-hover:scale-105" />
-      </div>
-      <div className="flex flex-1 flex-col gap-2 p-6">
-        <span className="text-xs font-semibold uppercase tracking-[0.18em] text-terracotta-600">
-          {eyebrow}
-        </span>
-        <h3 className="text-xl font-medium sm:text-2xl">{name}</h3>
-        <p className="flex-1 text-sm text-ink-700/80 sm:text-base">{tagline}</p>
-        <div className="mt-2 flex items-center justify-between">
+        <span className="absolute right-3 top-3">
           <Badge tone="gold">{t.productCard.comingSoonBadge}</Badge>
-          <span className="text-sm font-semibold text-terracotta-600 group-hover:underline">
-            {t.productCard.cta} →
-          </span>
-        </div>
+        </span>
+      </div>
+      <div className="flex flex-col gap-1 p-5">
+        <h3 className="text-lg font-medium sm:text-xl">{name}</h3>
+        <p className="text-sm text-ink-700/75">{tagline}</p>
       </div>
     </Link>
   )

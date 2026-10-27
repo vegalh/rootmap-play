@@ -10,7 +10,6 @@ describe('ProductCard', () => {
       <ProductCard
         productId="pocket-universe"
         href="/pocket-universe"
-        eyebrow="产品 A"
         name="宝宝的口袋宇宙"
         tagline="挑选五件孩子喜欢的小事物"
         illustration={PocketUniverseIllustration}

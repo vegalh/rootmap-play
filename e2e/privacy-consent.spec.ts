@@ -4,7 +4,7 @@ test.describe('Privacy notice', () => {
   test('appears on first visit and disappears after accepting', async ({ page }) => {
     await page.goto('')
 
-    const notice = page.getByText('匿名的产品使用数据')
+    const notice = page.getByText('匿名使用数据')
     await expect(notice).toBeVisible()
 
     await page.getByRole('button', { name: '好的，我知道了' }).click()
@@ -16,6 +16,6 @@ test.describe('Privacy notice', () => {
     await page.getByRole('button', { name: '暂不同意' }).click()
 
     await page.reload()
-    await expect(page.getByText('匿名的产品使用数据')).not.toBeVisible()
+    await expect(page.getByText('匿名使用数据')).not.toBeVisible()
   })
 })

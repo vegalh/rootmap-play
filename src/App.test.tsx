@@ -14,7 +14,7 @@ function renderAt(path: string) {
 describe('App routing', () => {
   it('renders the home page at /', () => {
     renderAt('/')
-    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('为孩子创造一段')
+    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('把宝宝喜欢的东西')
   })
 
   it.each([
